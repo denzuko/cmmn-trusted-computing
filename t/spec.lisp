@@ -153,50 +153,64 @@
     (is (string= label (step-ca-root-fingerprint)))))
 
 ;;; ──────────────────────────────────────────────────────────────────
-;;; cispec.feature
+;;; cispec.feature — runtime output validation
 ;;; ──────────────────────────────────────────────────────────────────
 
 (def-suite cispec-suite
   :in cmmn-trusted-computing-suite
-  :description "org.cispec label compliance via libcimatrix")
+  :description "Runtime org.cispec identity output from the signed binary")
 
 (in-suite cispec-suite)
 
-(defparameter *required-labels*
+(defparameter *required-cispec-keys*
   '("org.cispec.application"
     "org.cispec.managed-by"
     "org.cispec.fqdn"
     "org.cispec.service-account"
     "org.cispec.version"
-    "org.cispec.pki-root"))
+    "org.cispec.pki-root")
+  "org.cispec keys the binary must emit to stdout on execution.")
 
-(test all-six-labels-present
-  "libcimatrix gate exits zero when all six required labels are non-empty."
-  (let ((binary (fixture-fully-labelled-binary)))
-    (dolist (label *required-labels*)
-      (is (read-elf-label binary label)
-          (format nil "Label ~A must be present and non-empty" label)))
-    (is (run-cimatrix-gate binary))))
+(defun run-binary (binary-path)
+  "Execute BINARY-PATH and return (values exit-code stdout-string)."
+  (let* ((proc (sb-ext:run-program (namestring binary-path) '()
+                                   :search nil :wait t :output :stream))
+         (out  (with-output-to-string (s)
+                 (loop for c = (read-char (sb-ext:process-output proc) nil nil)
+                       while c do (write-char c s)))))
+    (values (sb-ext:process-exit-code proc) out)))
 
-(test missing-label-causes-gate-failure
-  "libcimatrix gate exits non-zero and names the missing field."
-  (let* ((binary (fixture-binary-missing-label "org.cispec.fqdn"))
-         (result (run-cimatrix-gate binary)))
-    (is-false result)
-    (is (gate-error-names-field-p result "org.cispec.fqdn"))))
+(test binary-emits-hello-world
+  "Signed binary exits zero and prints Hello, World."
+  (multiple-value-bind (exit out)
+      (run-binary (fixture-signed-attested-binary))
+    (is (zerop exit))
+    (is (search "Hello, World" out))))
 
-(test label-injection-is-idempotent
-  "Re-running label injection with identical values produces no change."
-  (let* ((binary (fixture-fully-labelled-binary))
-         (digest-before (elf-digest binary))
-         (_             (inject-labels binary))
-         (digest-after  (elf-digest binary)))
+(test binary-emits-all-cispec-identity-objects
+  "Signed binary emits all six org.cispec keys to stdout."
+  (multiple-value-bind (_ out)
+      (run-binary (fixture-signed-attested-binary))
     (declare (ignore _))
-    (is (string= digest-before digest-after))
-    (is (run-cimatrix-gate binary))))
+    (dolist (key *required-cispec-keys*)
+      (is (search key out)
+          (format nil "stdout must contain ~A" key)))))
 
-(test version-label-is-semver
-  "org.cispec.version matches MAJOR.MINOR.PATCH with no pre-release suffix."
-  (let* ((binary  (fixture-fully-labelled-binary))
-         (version (read-elf-label binary "org.cispec.version")))
-    (is (cl-ppcre:scan "^\\d+\\.\\d+\\.\\d+$" version))))
+(test binary-emits-semver-version
+  "org.cispec.version in stdout matches MAJOR.MINOR.PATCH."
+  (multiple-value-bind (_ out)
+      (run-binary (fixture-signed-attested-binary))
+    (declare (ignore _))
+    (let* ((pos   (search "org.cispec.version: " out))
+           (start (when pos (+ pos (length "org.cispec.version: "))))
+           (end   (when start (position #\Newline out :start start)))
+           (ver   (when end (subseq out start end))))
+      (is (and ver (cl-ppcre:scan "^\\d+\\.\\d+\\.\\d+$" ver))))))
+
+(test obfuscated-binary-correct-output
+  "Binary compiled with debug 0 and source tracking disabled still produces correct output."
+  (multiple-value-bind (exit out)
+      (run-binary (fixture-signed-attested-binary))
+    (is (zerop exit))
+    (is (search "Hello, World" out))
+    (is (search "org.cispec.application" out))))

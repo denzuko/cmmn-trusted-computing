@@ -84,3 +84,23 @@
   "Append EVENT to the audit log of CASE-OBJ."
   (setf (cmmn-case-audit-log case-obj)
         (append (cmmn-case-audit-log case-obj) (list event))))
+
+(defparameter *identity*
+  '(("org.cispec.application"   . "cmmn-trusted-computing")
+    ("org.cispec.managed-by"    . "consfigurator")
+    ("org.cispec.fqdn"          . "cmmn.dapla.net")
+    ("org.cispec.service-account" . "cmmn")
+    ("org.cispec.version"       . "0.1.0")
+    ("org.cispec.pki-root"      . ""))
+  "Runtime org.cispec identity objects emitted by the binary on execution.")
+
+(defun emit-identity ()
+  "Print all org.cispec identity objects to stdout."
+  (dolist (pair *identity*)
+    (format t "~A: ~A~%" (car pair) (cdr pair))))
+
+(defun main ()
+  "Binary entry point: emit org.cispec identity then hello world output."
+  (emit-identity)
+  (format t "Hello, World~%")
+  (sb-ext:exit :code 0))

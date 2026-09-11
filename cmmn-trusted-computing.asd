@@ -53,3 +53,9 @@
                "cl-ppcre")
   :serial t
   :components ((:file "t/spec")))
+
+(defsystem "cmmn-trusted-computing/e2e"
+  :description "End-to-end tests: execute signed binary, observe stdout, assert cispec output"
+  :depends-on ("cmmn-trusted-computing/tests")
+  :serial t
+  :components ((:file "t/e2e")))

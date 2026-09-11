@@ -9,14 +9,22 @@ build:
 	qlot install
 	sbcl $(SBCL_FLAGS) \
 	  --eval "(require :asdf)" \
-	  --eval "(asdf:load-system :cmmn-trusted-computing/pipeline)" \
-	  --eval "(sb-ext:save-lisp-and-die \"$(BINARY)\" :executable t :compression t)"
+	  --eval "(asdf:load-system :cmmn-trusted-computing/core)" \
+	  --eval "(sb-ext:save-lisp-and-die \"$(BINARY)\" :executable t :compression t \
+	           :toplevel #'cmmn-trusted-computing/core:main)"
 
 test:
 	sbcl $(SBCL_FLAGS) \
 	  --eval "(require :asdf)" \
 	  --eval "(asdf:load-system :cmmn-trusted-computing/tests)" \
 	  --eval "(fiveam:run! 'cmmn-trusted-computing/tests::cmmn-trusted-computing-suite)" \
+	  --eval "(sb-ext:exit)"
+
+e2e:
+	sbcl $(SBCL_FLAGS) \
+	  --eval "(require :asdf)" \
+	  --eval "(asdf:load-system :cmmn-trusted-computing/e2e)" \
+	  --eval "(fiveam:run! 'cmmn-trusted-computing/e2e::e2e-suite)" \
 	  --eval "(sb-ext:exit)"
 
 dist: build
