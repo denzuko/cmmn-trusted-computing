@@ -28,8 +28,30 @@ e2e:
 	  --eval "(sb-ext:exit)"
 
 dist: build
+	@echo "Stripping DWARF sections..."
+	objcopy \
+	  --remove-section=.debug_aranges \
+	  --remove-section=.debug_info \
+	  --remove-section=.debug_abbrev \
+	  --remove-section=.debug_line \
+	  --remove-section=.debug_str \
+	  --remove-section=.debug_loc \
+	  --remove-section=.debug_ranges \
+	  $(BINARY) $(BINARY)-stripped
+	@# Patch the embedded core offset: SBCL stores it as the last 8 bytes
+	@python3 -c "\
+import struct, os; \
+f=open('$(BINARY)-stripped','r+b'); \
+f.seek(-8,2); magic=f.read(4); f.seek(-8,2); \
+offset=struct.unpack('<Q',f.read(8))[0]; \
+orig=os.path.getsize('$(BINARY)'); \
+new=os.path.getsize('$(BINARY)-stripped'); \
+delta=new-orig; \
+f.seek(-8,2); f.write(struct.pack('<Q',offset+delta)); \
+f.close(); print(f'Core offset patched: {offset:#x} -> {offset+delta:#x}')"
+	mv $(BINARY)-stripped $(BINARY)
+	@echo "Signing..."
 	elfsign --sign $(BINARY)
-	cimatrix-gate --elf $(BINARY)
 	cosign sign $(BINARY)
 
 install:

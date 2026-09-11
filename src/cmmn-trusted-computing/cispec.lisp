@@ -1,7 +1,4 @@
 (declaim (optimize (debug 0) (speed 3) (safety 1)))
-#+sbcl
-(when (find-symbol "*SOURCE-LOCATION-STORE-SOURCE-FORM-P*" :sb-c)
-  (set (find-symbol "*SOURCE-LOCATION-STORE-SOURCE-FORM-P*" :sb-c) nil))
 
 (defpackage #:cmmn-trusted-computing/cispec
   (:use #:cl)
