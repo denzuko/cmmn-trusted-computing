@@ -1,0 +1,6 @@
+name: 40ants-doc
+version: ultralisp-20260902080501
+distinfo-subscription-url: qlot://localhost/40ants-doc.txt
+canonical-distinfo-url: qlot://localhost/40ants-doc.txt
+release-index-url: qlot://localhost/40ants-doc/ultralisp-20260902080501/releases.txt
+system-index-url: qlot://localhost/40ants-doc/ultralisp-20260902080501/systems.txt

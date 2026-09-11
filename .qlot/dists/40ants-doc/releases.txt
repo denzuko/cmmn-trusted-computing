@@ -1,0 +1,2 @@
+# project url size file-md5 content-sha1 prefix [system-file1..system-fileN]
+40ants-doc http://dist.ultralisp.org/archive/1645/40ants-doc-20260822223110.tgz 2693121 0356e03c0591ac5aece34c30294fa14d 212a15d7c5d5840c98870cd68b9cd44e1c96b46f 40ants-doc-20260822223110 40ants-doc-test.asd 40ants-doc-full.asd 40ants-doc.asd

@@ -1,5 +1,7 @@
 (declaim (optimize (debug 0) (speed 3) (safety 1)))
-(setf sb-c:*source-location-store-source-form-p* nil)
+#+sbcl
+(when (find-symbol "*SOURCE-LOCATION-STORE-SOURCE-FORM-P*" :sb-c)
+  (set (find-symbol "*SOURCE-LOCATION-STORE-SOURCE-FORM-P*" :sb-c) nil))
 
 (defpackage #:cmmn-trusted-computing/pipeline
   (:use #:cl #:cmmn-trusted-computing/core)
@@ -15,7 +17,9 @@
 (defparameter *sbcl-compile-flags*
   '("--noinform" "--non-interactive"
     "--eval" "(declaim (optimize (debug 0) (speed 3) (safety 1)))"
-    "--eval" "(setf sb-c:*source-location-store-source-form-p* nil)")
+    "--eval" "#+sbcl
+(when (find-symbol "*SOURCE-LOCATION-STORE-SOURCE-FORM-P*" :sb-c)
+  (set (find-symbol "*SOURCE-LOCATION-STORE-SOURCE-FORM-P*" :sb-c) nil))")
   "Flags passed to every SBCL invocation in the build stage.")
 
 (defun compile-source (source-path output-path case-obj)

@@ -1,0 +1,2 @@
+# project url size file-md5 content-sha1 prefix [system-file1..system-fileN]
+sunny-side qlot://localhost/sunny-side/git-8cba35788b02443e5709d731192bbc6ba5934d67/archive.tar.gz 8622 c015789d41f2782bd6636c4fc8c0093c a86f2a9ca2af60f5390f9a84ec7783ab8e127881 sunny-side-ref-8cba35788b02443e5709d731192bbc6ba5934d67 sunny-side.asd

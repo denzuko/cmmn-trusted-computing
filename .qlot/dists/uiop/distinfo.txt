@@ -1,0 +1,6 @@
+name: uiop
+version: ql-2024-10-12
+distinfo-subscription-url: qlot://localhost/uiop.txt
+canonical-distinfo-url: qlot://localhost/uiop.txt
+release-index-url: qlot://localhost/uiop/ql-2024-10-12/releases.txt
+system-index-url: qlot://localhost/uiop/ql-2024-10-12/systems.txt

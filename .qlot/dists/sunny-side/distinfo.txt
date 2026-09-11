@@ -1,0 +1,7 @@
+name: sunny-side
+version: git-8cba35788b02443e5709d731192bbc6ba5934d67
+distinfo-subscription-url: qlot://localhost/sunny-side.txt
+canonical-distinfo-url: qlot://localhost/sunny-side.txt
+release-index-url: qlot://localhost/sunny-side/git-8cba35788b02443e5709d731192bbc6ba5934d67/releases.txt
+system-index-url: qlot://localhost/sunny-side/git-8cba35788b02443e5709d731192bbc6ba5934d67/systems.txt
+qlot.published-at: 3996966412

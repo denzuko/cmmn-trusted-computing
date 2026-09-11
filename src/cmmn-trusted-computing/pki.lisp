@@ -1,5 +1,7 @@
 (declaim (optimize (debug 0) (speed 3) (safety 1)))
-(setf sb-c:*source-location-store-source-form-p* nil)
+#+sbcl
+(when (find-symbol "*SOURCE-LOCATION-STORE-SOURCE-FORM-P*" :sb-c)
+  (set (find-symbol "*SOURCE-LOCATION-STORE-SOURCE-FORM-P*" :sb-c) nil))
 
 (defpackage #:cmmn-trusted-computing/pki
   (:use #:cl)

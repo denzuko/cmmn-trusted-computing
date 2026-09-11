@@ -1,0 +1,2 @@
+# project url size file-md5 content-sha1 prefix [system-file1..system-fileN]
+bknr-datastore http://beta.quicklisp.org/archive/bknr-datastore/2025-06-22/bknr-datastore-20250622-git.tgz 630082 c14ec06acd6323567a5f168328917373 b545b3bc4ae414275be2add8c1b84c0ea0cfb0d3 bknr-datastore-20250622-git src/bknr.data.impex.asd src/bknr.datastore.asd src/bknr.impex.asd src/bknr.indices.asd src/bknr.skip-list.asd src/bknr.utils.asd src/bknr.xml.asd

@@ -1,0 +1,2 @@
+# project url size file-md5 content-sha1 prefix [system-file1..system-fileN]
+fiveam http://beta.quicklisp.org/archive/fiveam/2024-10-12/fiveam-20241012-git.tgz 33770 fafcbbeb6f20d07cfd7bccc362bdc8cd d50049f0bcbf73812057a9febd5439bee493a914 fiveam-20241012-git fiveam.asd

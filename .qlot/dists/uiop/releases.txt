@@ -1,0 +1,2 @@
+# project url size file-md5 content-sha1 prefix [system-file1..system-fileN]
+uiop http://beta.quicklisp.org/archive/uiop/2024-10-12/uiop-3.3.7.tgz 105806 85a0895b5225100fec3a56646ad066ce e05fafc1749b38f628249565484a9f2329fb47b8 uiop-3.3.7 asdf-driver.asd uiop.asd

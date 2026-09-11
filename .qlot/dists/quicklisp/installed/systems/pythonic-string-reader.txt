@@ -1,0 +1,1 @@
+dists/quicklisp/software/pythonic-string-reader-20180711-git/pythonic-string-reader.asd

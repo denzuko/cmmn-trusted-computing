@@ -1,6 +1,6 @@
 ultralisp 40ants-doc
-ql sunny-side
+git sunny-side https://github.com/denzuko/sunny-side
 ql fiveam
-ql bknr-datastore
 ql cl-ppcre
 ql uiop
+ql bknr-datastore

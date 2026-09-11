@@ -1,0 +1,4 @@
+# project system-file system-name [dependency1..dependencyN]
+sunny-side sunny-side sunny-side/tests fiveam sunny-side
+sunny-side sunny-side sunny-side/docs 40ants-doc 40ants-doc-full sunny-side
+sunny-side sunny-side sunny-side cl-ppcre fiveam

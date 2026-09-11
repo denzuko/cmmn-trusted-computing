@@ -1,0 +1,11 @@
+# project system-file system-name [dependency1..dependencyN]
+bknr-datastore bknr.data.impex bknr.data.impex asdf bknr.datastore bknr.impex bknr.indices bknr.utils cl-interpol unit-test
+bknr-datastore bknr.datastore bknr.datastore alexandria asdf bknr.indices bknr.utils cl-interpol closer-mop trivial-utf-8 unit-test yason
+bknr-datastore bknr.datastore bknr.datastore/test bknr.datastore bknr.utils cl-store fiveam
+bknr-datastore bknr.impex bknr.impex asdf bknr.indices bknr.utils bknr.xml cl-interpol closer-mop cxml
+bknr-datastore bknr.indices bknr.indices asdf bknr.skip-list bknr.utils cl-interpol closer-mop
+bknr-datastore bknr.indices bknr.indices/test bknr.indices unit-test
+bknr-datastore bknr.skip-list bknr.skip-list asdf
+bknr-datastore bknr.skip-list bknr.skip-list/test bknr.skip-list unit-test
+bknr-datastore bknr.utils bknr.utils alexandria asdf bordeaux-threads cl-interpol cl-ppcre flexi-streams md5
+bknr-datastore bknr.xml bknr.xml asdf cl-interpol cxml
